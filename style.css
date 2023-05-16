@@ -1,0 +1,56 @@
+/* 
+    EVERYTHING
+*/
+* {
+    box-sizing: border-box;
+}
+/* 
+    ELEMENTS
+*/
+body {
+    background-color: rgb(29, 29, 29);
+}
+/* 
+    CLASSES
+*/
+/* 
+        Quiz box
+*/
+.quiz-container {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 6px;
+    padding: 30px;
+    background-color: rgb(173, 163, 115);
+}
+/* 
+        Question box
+*/
+.question-container {
+    margin: 0 0 30px 0;;
+    display: flex;
+    justify-content: center;
+}
+.question {
+    background-color: antiquewhite;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 6px;;
+}
+/* 
+        Answers box
+*/
+.answer-container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.answer {
+    background-color: antiquewhite;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 6px;;
+}
+.answer:hover {
+    filter: brightness(50%);
+}
