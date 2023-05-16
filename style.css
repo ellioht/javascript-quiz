@@ -3,12 +3,17 @@
 */
 * {
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 /* 
     ELEMENTS
 */
 body {
-    background-color: rgb(29, 29, 29);
+    background-color: rgb(30, 30, 30);
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 98vh;
 }
 /* 
     CLASSES
@@ -23,6 +28,7 @@ body {
     border-radius: 6px;
     padding: 30px;
     background-color: rgb(173, 163, 115);
+    border: 1px solid #222;
 }
 /* 
         Question box
@@ -37,6 +43,7 @@ body {
     padding: 20px;
     margin: 5px;
     border-radius: 6px;;
+    border: 1px solid #222;
 }
 /* 
         Answers box
@@ -49,8 +56,25 @@ body {
     background-color: antiquewhite;
     padding: 20px;
     margin: 5px;
-    border-radius: 6px;;
+    border-radius: 6px;
+    border: 1px solid #222;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 550;
 }
 .answer:hover {
-    filter: brightness(50%);
+    background-color: #816b56;
+    color: antiquewhite;
+    animation: glow 4s infinite;
+}
+@keyframes glow {
+    0% {
+        filter: brightness(100%);
+    }
+    50% {
+        filter: brightness(120%);
+    }
+    100% {
+        filter: brightness(100%);
+    }
 }
