@@ -9,16 +9,26 @@
 </head>
 <body>
     <div class="quiz-container">
-        <div class="question-container">
-            <div class="question">
-                <h1 id="question">This is a question?</h1>
+        <div class="stnt-container">
+            <div class="stnt-button" id="start-button">
+                <h3>Start</h3>
             </div>
         </div>
-        <div class="answer-container" id="answer">
+        <div class="question-container hidden" id="question-box">
+            <div class="question">
+                <h2 id="question">This is a question?</h2>
+            </div>
+        </div>
+        <div class="answer-container hidden" id="answer">
             <button class="answer">Answer A</button>
             <button class="answer">Answer B</button>
             <button class="answer">Answer C</button>
             <button class="answer">Answer D</button>
+        </div>
+        <div class="stnt-container hidden" id="next-button">
+            <div class="stnt-button">
+                <h3>Next</h3>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
