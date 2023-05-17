@@ -19,11 +19,15 @@ body {
     CLASSES
 */
 /* 
+        Hidden Class
+*/
+.hidden {
+    display: none !important;
+}
+/* 
         Quiz box
 */
 .quiz-container {
-    width: 90%;
-    max-width: 600px;
     margin: auto;
     border-radius: 6px;
     padding: 30px;
@@ -34,7 +38,7 @@ body {
         Question box
 */
 .question-container {
-    margin: 0 0 30px 0;;
+    margin: 0 0 30px 0;
     display: flex;
     justify-content: center;
 }
@@ -42,19 +46,25 @@ body {
     background-color: antiquewhite;
     padding: 20px;
     margin: 5px;
-    border-radius: 6px;;
+    border-radius: 6px;
     border: 1px solid #222;
 }
 /* 
         Answers box
 */
 .answer-container {
+    margin: 0 0 30px 0;
     display: grid;
     grid-template-columns: auto auto;
 }
+@media (max-width: 800px) {
+    .answer-container {
+        grid-template-columns: auto;
+    }
+}
 .answer {
     background-color: antiquewhite;
-    padding: 20px;
+    padding: 20px 120px;
     margin: 5px;
     border-radius: 6px;
     border: 1px solid #222;
@@ -67,12 +77,50 @@ body {
     color: antiquewhite;
     animation: glow 4s infinite;
 }
+/* 
+        Start / Next Button
+*/
+.stnt-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    
+}
+.stnt-button {
+    background-color: antiquewhite;
+    padding: 0px 80px;
+    margin: 5px;
+    border-radius: 6px;
+    border: 1px solid #222;
+    cursor: pointer;
+}
+.stnt-button:hover {
+    background-color: #daccc0;
+    animation: glow 4s infinite;
+}
+/* 
+        Correct / False Classes
+*/
+.false {
+    cursor: default !important;
+    background-color: #721212 !important;
+    pointer-events: none;
+}
+.correct {
+    cursor: default !important;
+    background-color: #12721f !important;
+    pointer-events: none;
+}
+/* 
+    ANIMATIONS
+*/
 @keyframes glow {
     0% {
         filter: brightness(100%);
     }
     50% {
         filter: brightness(120%);
+        background-color: #64dd6a;
     }
     100% {
         filter: brightness(100%);
