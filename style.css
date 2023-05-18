@@ -1,9 +1,13 @@
 /* 
     EVERYTHING
 */
+:root {
+    --bg: url('https://images.unsplash.com/photo-1681473937206-dae584b0808a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=715&q=80://imahttps://images.unsplash.com/photo-1681473937206-dae584b0808a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=715&q=80ges.unsplash.com/photo-1452723312111-3a7d0db0e024?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450.jpg') no-repeat left center / cover;
+  }
 * {
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    z-index: 1;
 }
 /* 
     ELEMENTS
@@ -28,11 +32,20 @@ body {
         Quiz box
 */
 .quiz-container {
+    position: relative;
     margin: auto;
     border-radius: 6px;
     padding: 30px;
-    background-color: rgb(173, 163, 115);
     border: 1px solid #222;
+    overflow: hidden;
+}
+.background-image {
+    position: absolute;
+    height: 1000px;
+    width: 1000px;
+    right: -250px;
+    top: -200px;
+    background: var(--bg);
 }
 /* 
         Question box
@@ -73,7 +86,7 @@ body {
     font-weight: 550;
 }
 .answer:hover {
-    background-color: #816b56;
+    background-color: #a5dee4;
     color: antiquewhite;
     animation: glow 4s infinite;
 }
@@ -95,7 +108,7 @@ body {
     cursor: pointer;
 }
 .stnt-button:hover {
-    background-color: #daccc0;
+    background-color: #a5dee4;
     animation: glow 4s infinite;
 }
 /* 
@@ -120,7 +133,7 @@ body {
     }
     50% {
         filter: brightness(120%);
-        background-color: #64dd6a;
+        background-color: #64c5dd;
     }
     100% {
         filter: brightness(100%);
