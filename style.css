@@ -32,6 +32,20 @@ body {
 .hidden {
     display: none !important;
 }
+.top-tab-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+.top-tab {
+    position: absolute;
+    width: 100vw;
+    background: linear-gradient(34deg, rgb(185, 117, 216) 30%, rgb(238, 173, 130) 70%);
+    text-align: center;
+    border: 1px solid #222;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
 /* 
         Quiz box
 */
@@ -45,10 +59,10 @@ body {
 }
 .background-image {
     position: absolute;
-    height: 800px;
-    width: 800px;
-    right: -150px;
-    top: -80px;
+    height: 850px;
+    width: 850px;
+    right: -100px;
+    top: -40px;
     background: var(--bg);
     filter: saturate(60%) brightness(100%);
 }
@@ -56,13 +70,13 @@ body {
         Question box
 */
 .question-container {
-    margin: 0 0 30px 0;
+    margin: 40px 0 30px 0;
     display: flex;
     justify-content: center;
 }
 .question {
     background-color: var(--btn-color);
-    padding: 20px;
+    padding: 40px 20px;
     margin: 5px;
     border-radius: 6px;
     border: 1px solid #222;
@@ -76,22 +90,28 @@ body {
     margin: 0 0 30px 0;
     display: grid;
     grid-template-columns: auto auto;
+    justify-items: center;
+    justify-content: center;
 }
 @media (max-width: 800px) {
     .answer-container {
         grid-template-columns: auto;
+        justify-items: center;
+        justify-content: center;
     }
 }
 .answer {
     position: relative;
     background-color: var(--btn-color);
-    padding: 20px 120px;
+    width: 250px;
+    /* padding: 0px 100px; */
     margin: 5px;
     border-radius: 6px;
     border: 1px solid #222;
     font-size: 16px;
     cursor: pointer;
     font-weight: 550;
+    text-align: center;
 }
 .answer:hover {
     background-color: var(--hover-color);
@@ -104,6 +124,7 @@ body {
     display: flex;
     align-content: center;
     justify-content: center;
+    margin: 60px 0 0 0;
     
 }
 .stnt-button {
