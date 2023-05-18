@@ -19,6 +19,12 @@ const questions = [
             {answerText: "1", correct: false},
             {answerText: "8", correct: true},
         ]
+    },
+    {
+        question: "The more you take, the more you leave behind. What am I?",
+        answers: [
+            {answerText: "0", correct: "time" && "Time"}
+        ]
     }
 ];
 
@@ -28,6 +34,7 @@ const answerElement = document.getElementById("answer");
 const startButton = document.getElementById("start-button");
 const nextButton = document.getElementById("next-button");
 const questionBox = document.getElementById("question-box");
+const riddleBox = document.getElementById("riddle-box");
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -66,6 +73,7 @@ function showQuestion() {
     timeout = [];
 
     nextButton.classList.add("hidden");
+    nextButton.classList.add("enterAnim");
     answerElement.setAttribute("style", "")
 
 
@@ -87,24 +95,31 @@ function showQuestion() {
         timeout.push(setTimeout(function () { questionElement.innerHTML += txt.charAt(i); }, 100*i));
     }
 
-
+        if (currentQuestion.answers.length <= 1) {
+                riddleRound(); 
+        } else {
+            // --- SHOW ANSWERS ---
+            // Point to the answers in the questions and do a for each method, for each array value (4)
+            currentQuestion.answers.forEach(answer => {
+                // Create a variable that is a new button element
+                const button = document.createElement("button");
+                // button.classList.add("enterAnim");
+                // Set the button HTML to the answer text
+                button.innerHTML = answer.answerText; 
+                // Add the answer class to the button for styling etc.
+                button.classList.add("answer");
+                // Add buttons to the div
+                answerElement.appendChild(button); 
+        
+        
+                // When button is clicked check is true or false
+                button.addEventListener("click", function() { answerCheck(answer, button); });
+            });
+        }
+    
     // questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
 
-    // --- SHOW ANSWERS ---
-    // Point to the answers in the questions and do a for each method, for each array value (4)
-    currentQuestion.answers.forEach(answer => {
-        // Create a variable that is a new button element
-        const button = document.createElement("button");
-        // Set the button HTML to the answer text
-        button.innerHTML = answer.answerText; 
-        // Add the answer class to the button for styling etc.
-        button.classList.add("answer");
-        // Add buttons to the div
-        answerElement.appendChild(button); 
 
-        // When button is clicked check is true or false
-        button.addEventListener("click", function() { answerCheck(answer, button); });
-    });
 }
 
 // THIS FUNCTION CLEARS THE QUESTION AND ALL ANSWERS
@@ -118,47 +133,87 @@ function clearQuestion() {
 
 // THIS FUNCTION CHECKS IF THE ANSWER IS CORRECT
 function answerCheck(a,b) {
-    console.log("Check Answer");
     // "a" is current question "b" is button
+
+    nextButton.classList.remove("hidden");
+    nextButton.addEventListener("click", showQuestion);
 
     // If question is correct
     if (a.correct) {
-        console.log("CORRECT");
         b.classList.add("correct");
         answerElement.setAttribute("style", "pointer-events: none;")
         score++;
-        nextButton.classList.remove("hidden");
+        
         // setTimeout(function(){ nextButton.classList.remove("hidden"); }, 2000);
     } else {
-        console.log("FALSE");
         b.classList.add("false");
         answerElement.setAttribute("style", "pointer-events: none;")
-        nextButton.classList.remove("hidden");
+        
         // setTimeout(function(){ nextButton.classList.remove("hidden"); }, 2000);
     }
 
     // If at end of questions
-    if (currentQuestionIndex < 1) {
+    if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
     } else {
         currentQuestionIndex = 0;
+        nextButton.removeEventListener("click", showQuestion);
+        nextButton.addEventListener("click", showScore);
     }
     
+    
+}
+
+function showScore() {
+    clearQuestion();
+    for (let i = 0; i < timeout.length; i++) {
+        clearTimeout(timeout[i]);
+    }
+    timeout = [];
+    questionElement.innerHTML = "You scored " + score + " out of " + questions.length;
+
+    document.getElementById("finish").innerHTML = "Go Again";
+    nextButton.classList.remove("hidden");
     nextButton.addEventListener("click", showQuestion);
 }
+
+function riddleRound() {
+    console.log("Riddle Round");
+    riddleBox.classList.remove("hidden");
+    riddleBox.setAttribute("style", "pointer-events: auto;")
+}
+
+// This function is called in html <form> element when user enters into text box
+function checkInput() {
+
+    let textBox = document.getElementById('text-box');
+    let userInput = textBox.value;
+    let currentQuestion = questions[currentQuestionIndex];
+
+    riddleBox.setAttribute("style", "pointer-events: none;")
+
+    currentQuestion.answers.forEach(ans => {
+        if (userInput == ans.correct) {
+            console.log("correct");
+            score++;
+        } else {
+            console.log("incorrect");
+        }
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            showQuestion();
+            riddleBox.classList.add("hidden");
+        } else {
+            currentQuestionIndex = 0;
+            showScore();
+            riddleBox.classList.add("hidden");
+            score = 0;
+        }
+    });
+    
+  }
 
 
 startQuiz();
 
 
-// Background
-const bg = document.querySelector('.background-image');
-const windowWidth = window.innerWidth / 5;
-const windowHeight = window.innerHeight / 5 ;
-
-bg.addEventListener('mousemove', (e) => {
-  const mouseX = e.clientX / windowWidth;
-  const mouseY = e.clientY / windowHeight;
-  
-  bg.style.transform = `translate3d(-${mouseX}%, -${mouseY}%, 0)`;
-});

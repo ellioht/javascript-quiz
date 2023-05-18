@@ -28,10 +28,15 @@
         </div>
         <div class="stnt-container hidden" id="next-button">
             <div class="stnt-button">
-                <h3>Next</h3>
+                <h3 id="finish">Next</h3>
             </div>
         </div>
+        <form autocomplete="off" class="text-container hidden" id="riddle-box">
+            <input autocomplete="off" name="hidden" class="text-box" type="text" id="text-box" placeholder="Enter...">
+            <div class="guess-btn" onclick="checkInput()">Make a guess!</div>
+        </form>
     </div>
     <script src="script.js"></script>
+    <script src="effects.js"></script>
 </body>
 </html>
