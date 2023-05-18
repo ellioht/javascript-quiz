@@ -23,7 +23,7 @@ const questions = [
     {
         question: "The more you take, the more you leave behind. What am I?",
         answers: [
-            {answerText: "0", correct: "time" && "Time"}
+            {answerText: "0", correct: ["time", "Time"]}
         ]
     }
 ];
@@ -193,12 +193,18 @@ function checkInput() {
     riddleBox.setAttribute("style", "pointer-events: none;")
 
     currentQuestion.answers.forEach(ans => {
-        if (userInput == ans.correct) {
-            console.log("correct");
-            score++;
-        } else {
-            console.log("incorrect");
+
+        for (let i = 0; i < ans.correct.length; i++) {
+            if (ans.correct[i] === userInput) {
+                console.log("correct");
+                score++;
+            } else {
+                console.log("incorrect");
+            }
         }
+        
+        document.getElementById('text-box').value = "";
+
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
             showQuestion();
