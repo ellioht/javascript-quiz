@@ -32,8 +32,9 @@ const questionBox = document.getElementById("question-box");
 let currentQuestionIndex = 0;
 let score = 0;
 
-//---------------------------
-
+// timeout will hold the timeoutID for each character in showQuestion() for type writer effect
+// timeout = empty array, needs to be array because different timeouts for each char
+let timeout = [];
 
 
 //------>> FUNCTIONS <<------
@@ -50,7 +51,6 @@ function startQuiz() {
 function clearHidden() {
     answerElement.classList.remove("hidden");
     questionBox.classList.remove("hidden");
-    nextButton.classList.remove("hidden");
     startButton.classList.add("hidden");
     showQuestion();
 }
@@ -58,6 +58,14 @@ function clearHidden() {
 // THIS FUNCTION CREATES A NEW QUESTION
 function showQuestion() {
 
+    // Clears the timeout for every character, then resets the array
+    // Needed incase next question starts before typing entire question
+    for (let i = 0; i < timeout.length; i++) {
+        clearTimeout(timeout[i]);
+    }
+    timeout = [];
+
+    nextButton.classList.add("hidden");
     answerElement.setAttribute("style", "")
 
 
@@ -68,8 +76,19 @@ function showQuestion() {
     let currentQuestion = questions[currentQuestionIndex];
     // Make a variable that will be a number before the question
     let questionNo = currentQuestionIndex + 1;
+
+
     // Set HTML text of the question to queston number and current question
-    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    let txt = questionNo + ". " + currentQuestion.question;
+    questionElement.innerHTML = "";
+    // Writes out the question with a small delay after each character
+    for (let i = 0; i < txt.length; i++) {
+        timeout.push(setTimeout(function () { questionElement.innerHTML += txt.charAt(i); }, 100*i));
+    }
+
+
+    // questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
 
     // --- SHOW ANSWERS ---
     // Point to the answers in the questions and do a for each method, for each array value (4)
@@ -100,18 +119,25 @@ function clearQuestion() {
 // THIS FUNCTION CHECKS IF THE ANSWER IS CORRECT
 function answerCheck(a,b) {
     console.log("Check Answer");
-    // "a" is current question answer from showQuestion function
+    // "a" is current question "b" is button
+
+    // If question is correct
     if (a.correct) {
         console.log("CORRECT");
         b.classList.add("correct");
         answerElement.setAttribute("style", "pointer-events: none;")
         score++;
+        nextButton.classList.remove("hidden");
+        // setTimeout(function(){ nextButton.classList.remove("hidden"); }, 2000);
     } else {
         console.log("FALSE");
         b.classList.add("false");
         answerElement.setAttribute("style", "pointer-events: none;")
+        nextButton.classList.remove("hidden");
+        // setTimeout(function(){ nextButton.classList.remove("hidden"); }, 2000);
     }
 
+    // If at end of questions
     if (currentQuestionIndex < 1) {
         currentQuestionIndex++;
     } else {
@@ -122,5 +148,17 @@ function answerCheck(a,b) {
 }
 
 
-
 startQuiz();
+
+
+// Background
+const bg = document.querySelector('.background-image');
+const windowWidth = window.innerWidth / 5;
+const windowHeight = window.innerHeight / 5 ;
+
+bg.addEventListener('mousemove', (e) => {
+  const mouseX = e.clientX / windowWidth;
+  const mouseY = e.clientY / windowHeight;
+  
+  bg.style.transform = `translate3d(-${mouseX}%, -${mouseY}%, 0)`;
+});
