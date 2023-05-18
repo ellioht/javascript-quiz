@@ -8,8 +8,9 @@
     <title>Quiz App</title>
 </head>
 <body>
-    <div class="quiz-container">
+    <div class="quiz-container" id="quiz-box">
         <div class="background-image"></div>
+        <div class="top-tab-container"><div class="top-tab"><h3>Javascript Quiz</h3></div></div>
         <div class="stnt-container">
             <div class="stnt-button" id="start-button">
                 <h3>Start</h3>
@@ -21,20 +22,20 @@
             </div>
         </div>
         <div class="answer-container hidden" id="answer">
-            <button class="answer">Answer A</button>
-            <button class="answer">Answer B</button>
-            <button class="answer">Answer C</button>
-            <button class="answer">Answer D</button>
+            <button class="answer"><h4>Answer A</h4></button>
+            <button class="answer"><h4>Answer B</h4></button>
+            <button class="answer"><h4>Answer C</h4></button>
+            <button class="answer"><h4>Answer D</h4></button>
         </div>
+        <form autocomplete="off" class="text-container hidden" id="riddle-box">
+            <input autocomplete="off" name="hidden" class="text-box" type="text" id="text-box" placeholder="Enter...">
+            <div class="guess-btn" id="guess-box" onclick="checkInput()">Make a guess!</div>
+        </form>
         <div class="stnt-container hidden" id="next-button">
             <div class="stnt-button">
                 <h3 id="finish">Next</h3>
             </div>
         </div>
-        <form autocomplete="off" class="text-container hidden" id="riddle-box">
-            <input autocomplete="off" name="hidden" class="text-box" type="text" id="text-box" placeholder="Enter...">
-            <div class="guess-btn" onclick="checkInput()">Make a guess!</div>
-        </form>
     </div>
     <script src="script.js"></script>
     <script src="effects.js"></script>

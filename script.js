@@ -25,7 +25,22 @@ const questions = [
         answers: [
             {answerText: "0", correct: ["time", "Time"]}
         ]
-    }
+    },
+    {
+        question: "What is 9 + 10?",
+        answers: [
+            {answerText: "21", correct: false},
+            {answerText: "19", correct: true},
+            {answerText: "You Stupid", correct: false},
+            {answerText: "5", correct: false},
+        ]
+    },
+    {
+        question: "What can you hold in your right hand but never in your left?",
+        answers: [
+            {answerText: "0", correct: ["left hand", "Left Hand", "Your left hand", "your left hand"]}
+        ]
+    },
 ];
 
 // SETTING HTML ID TAGS AS VARIABLES
@@ -35,6 +50,8 @@ const startButton = document.getElementById("start-button");
 const nextButton = document.getElementById("next-button");
 const questionBox = document.getElementById("question-box");
 const riddleBox = document.getElementById("riddle-box");
+const guessBox = document.getElementById("guess-box");
+const textBox = document.getElementById("text-box");
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -64,7 +81,7 @@ function clearHidden() {
 
 // THIS FUNCTION CREATES A NEW QUESTION
 function showQuestion() {
-
+    console.log(score);
     // Clears the timeout for every character, then resets the array
     // Needed incase next question starts before typing entire question
     for (let i = 0; i < timeout.length; i++) {
@@ -72,54 +89,45 @@ function showQuestion() {
     }
     timeout = [];
 
+    riddleBox.classList.add("hidden");
     nextButton.classList.add("hidden");
     nextButton.classList.add("enterAnim");
     answerElement.setAttribute("style", "")
 
-
-    // --- SHOW QUESTIONS ---
     // Clear off any old questions and answers
     clearQuestion();
-    // Make a variable that is the current question
+ 
     let currentQuestion = questions[currentQuestionIndex];
-    // Make a variable that will be a number before the question
     let questionNo = currentQuestionIndex + 1;
 
 
-    // Set HTML text of the question to queston number and current question
-
+    // Set HTML text of the question to queston number + current question
     let txt = questionNo + ". " + currentQuestion.question;
     questionElement.innerHTML = "";
-    // Writes out the question with a small delay after each character
+
+    // For every character of the question push a new character to a new spot of the timeout array
     for (let i = 0; i < txt.length; i++) {
-        timeout.push(setTimeout(function () { questionElement.innerHTML += txt.charAt(i); }, 100*i));
-    }
+                                           // question element += next character of the question. Wait 100ms * i for every character, so every character has a longer wait time than the last.
+        timeout.push(setTimeout(function () { questionElement.innerHTML += txt.charAt(i); }, 50*i));
+    };
 
-        if (currentQuestion.answers.length <= 1) {
-                riddleRound(); 
-        } else {
-            // --- SHOW ANSWERS ---
-            // Point to the answers in the questions and do a for each method, for each array value (4)
-            currentQuestion.answers.forEach(answer => {
-                // Create a variable that is a new button element
-                const button = document.createElement("button");
-                // button.classList.add("enterAnim");
-                // Set the button HTML to the answer text
-                button.innerHTML = answer.answerText; 
-                // Add the answer class to the button for styling etc.
-                button.classList.add("answer");
-                // Add buttons to the div
-                answerElement.appendChild(button); 
+    // If there is only 1 answer in the question variable it must be a riddle question so execute code
+    if (currentQuestion.answers.length <= 1) {
+            riddleRound(); 
+    } else {
+        // If not it is a normal 4 answer question
+        // For each answer (4 answers)
+        currentQuestion.answers.forEach(answer => {
+            // Create a variable that is a new button element then set the text to the answer text and add the answer class style. Then append button to answer container
+            const button = document.createElement("button");
+            button.innerHTML = '<h3>' + answer.answerText + '</h3>'; 
+            button.classList.add("answer");
+            answerElement.appendChild(button); 
         
-        
-                // When button is clicked check is true or false
-                button.addEventListener("click", function() { answerCheck(answer, button); });
-            });
-        }
-    
-    // questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
-
-
+            // When button is clicked check is true or false
+            button.addEventListener("click", function() { answerCheck(answer, button); });
+        });
+    };
 }
 
 // THIS FUNCTION CLEARS THE QUESTION AND ALL ANSWERS
@@ -143,13 +151,9 @@ function answerCheck(a,b) {
         b.classList.add("correct");
         answerElement.setAttribute("style", "pointer-events: none;")
         score++;
-        
-        // setTimeout(function(){ nextButton.classList.remove("hidden"); }, 2000);
     } else {
         b.classList.add("false");
         answerElement.setAttribute("style", "pointer-events: none;")
-        
-        // setTimeout(function(){ nextButton.classList.remove("hidden"); }, 2000);
     }
 
     // If at end of questions
@@ -160,11 +164,11 @@ function answerCheck(a,b) {
         nextButton.removeEventListener("click", showQuestion);
         nextButton.addEventListener("click", showScore);
     }
-    
-    
 }
 
+// THIS FUNCTION SHOWS THE SCORE AT THE END OF THE QUIZ
 function showScore() {
+
     clearQuestion();
     for (let i = 0; i < timeout.length; i++) {
         clearTimeout(timeout[i]);
@@ -174,16 +178,23 @@ function showScore() {
 
     document.getElementById("finish").innerHTML = "Go Again";
     nextButton.classList.remove("hidden");
+    score = 0;
+    console.log("SCORE CLEARED");
+    nextButton.removeEventListener("click", showScore);
     nextButton.addEventListener("click", showQuestion);
 }
 
+// THIS FUNCTION SETS UP THE QUIZ AS A RIDDLE ROUND
 function riddleRound() {
-    console.log("Riddle Round");
+    textBox.classList.remove("hidden");
+    guessBox.innerHTML = "Make a guess!";
     riddleBox.classList.remove("hidden");
+    guessBox.classList.remove("correct");
+    guessBox.classList.remove("false");
     riddleBox.setAttribute("style", "pointer-events: auto;")
 }
 
-// This function is called in html <form> element when user enters into text box
+// THIS CHECKS USER INPUT ON THE RIDDLE ROUND, CALLED IN HTML <DIV> ELEMENT
 function checkInput() {
 
     let textBox = document.getElementById('text-box');
@@ -191,15 +202,22 @@ function checkInput() {
     let currentQuestion = questions[currentQuestionIndex];
 
     riddleBox.setAttribute("style", "pointer-events: none;")
-
+    console.log(userInput);
+    // For each answer (only 1 in riddle round)
     currentQuestion.answers.forEach(ans => {
-
+        
+        // For every possible answer in the answer array
         for (let i = 0; i < ans.correct.length; i++) {
-            if (ans.correct[i] === userInput) {
-                console.log("correct");
+            if (ans.correct[i] == userInput) {
                 score++;
+                guessBox.classList.add("correct");
+                guessBox.innerHTML = "Correct!";
+                textBox.classList.add("hidden");
+                break;
             } else {
-                console.log("incorrect");
+                guessBox.classList.add("false");
+                guessBox.innerHTML = "False!";
+                textBox.classList.add("hidden");
             }
         }
         
@@ -207,13 +225,16 @@ function checkInput() {
 
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
-            showQuestion();
-            riddleBox.classList.add("hidden");
+            nextButton.classList.remove("hidden");
+            nextButton.removeEventListener("click", showScore);
+            nextButton.addEventListener("click", showQuestion);
         } else {
             currentQuestionIndex = 0;
-            showScore();
-            riddleBox.classList.add("hidden");
+            nextButton.classList.remove("hidden");
+            nextButton.removeEventListener("click", showScore);
+            nextButton.addEventListener("click", showQuestion);
             score = 0;
+            showScore();
         }
     });
     
