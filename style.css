@@ -2,12 +2,16 @@
     EVERYTHING
 */
 :root {
-    --bg: url('https://images.unsplash.com/photo-1681473937206-dae584b0808a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=715&q=80://imahttps://images.unsplash.com/photo-1681473937206-dae584b0808a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=715&q=80ges.unsplash.com/photo-1452723312111-3a7d0db0e024?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450.jpg') no-repeat left center / cover;
+    --bg: url('https://images.unsplash.com/photo-1659298338843-f0701c9eab64') no-repeat left center / cover;
+    --btn-color: rgb(230, 182, 80);
+    --box-color: rgb(231, 209, 161);
+    --hover-color: #ce59e6;
+    --hoverAnim-color: #dd9aeb;
   }
 * {
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    z-index: 1;
+    z-index: 0;
 }
 /* 
     ELEMENTS
@@ -41,11 +45,12 @@ body {
 }
 .background-image {
     position: absolute;
-    height: 1000px;
-    width: 1000px;
-    right: -250px;
-    top: -200px;
+    height: 800px;
+    width: 800px;
+    right: -150px;
+    top: -80px;
     background: var(--bg);
+    filter: saturate(60%) brightness(100%);
 }
 /* 
         Question box
@@ -56,11 +61,13 @@ body {
     justify-content: center;
 }
 .question {
-    background-color: antiquewhite;
+    background-color: var(--btn-color);
     padding: 20px;
     margin: 5px;
     border-radius: 6px;
     border: 1px solid #222;
+    display: relative;
+    max-width: 300px;
 }
 /* 
         Answers box
@@ -76,7 +83,8 @@ body {
     }
 }
 .answer {
-    background-color: antiquewhite;
+    position: relative;
+    background-color: var(--btn-color);
     padding: 20px 120px;
     margin: 5px;
     border-radius: 6px;
@@ -86,8 +94,7 @@ body {
     font-weight: 550;
 }
 .answer:hover {
-    background-color: #a5dee4;
-    color: antiquewhite;
+    background-color: var(--hover-color);
     animation: glow 4s infinite;
 }
 /* 
@@ -100,7 +107,7 @@ body {
     
 }
 .stnt-button {
-    background-color: antiquewhite;
+    background-color: var(--btn-color);
     padding: 0px 80px;
     margin: 5px;
     border-radius: 6px;
@@ -108,7 +115,42 @@ body {
     cursor: pointer;
 }
 .stnt-button:hover {
-    background-color: #a5dee4;
+    background-color: var(--hover-color);
+    animation: glow 4s infinite;
+}
+.text-container {
+    margin: 0 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.text-box {
+    background-color: var(--box-color);
+    padding: 20px;
+    margin: 5px;
+    border-radius: 6px;
+    border: 1px solid #222;
+    display: relative;
+    max-width: 300px;
+}
+::placeholder {
+    color: #222;
+    text-align: center;
+}
+.guess-btn {
+    position: relative;
+    background-color: var(--btn-color);
+    padding: 20px 20px;
+    border-radius: 6px;
+    border: 1px solid #222;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 550;
+    margin: 20px 0 0 0;
+}
+.guess-btn:hover {
+    background-color: var(--hover-color);
     animation: glow 4s infinite;
 }
 /* 
@@ -116,13 +158,16 @@ body {
 */
 .false {
     cursor: default !important;
-    background-color: #721212 !important;
+    background-color: #bd1d1d !important;
     pointer-events: none;
 }
 .correct {
     cursor: default !important;
-    background-color: #12721f !important;
+    background-color: #3bdd51 !important;
     pointer-events: none;
+}
+.enterAnim {
+    animation: enter .2s 1;
 }
 /* 
     ANIMATIONS
@@ -130,12 +175,22 @@ body {
 @keyframes glow {
     0% {
         filter: brightness(100%);
+        background-color: var(--hover-color);
     }
     50% {
         filter: brightness(120%);
-        background-color: #64c5dd;
+        background-color: var(--hoverAnim-color);
     }
     100% {
         filter: brightness(100%);
+        background-color: var(--hover-color);
+    }
+}
+@keyframes enter {
+    0% {
+        transform: scale(.5);
+    }
+    100% {
+        transform: scale(1);
     }
 }
