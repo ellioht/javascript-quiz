@@ -57,7 +57,7 @@ body {
 }
 .prog-bar {
     position: absolute;
-    width: 50%;
+    width: 0%;
     background-color: #eee384;
     height: 100%;
 }
