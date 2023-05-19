@@ -1,57 +1,5 @@
 //------>> VARIABLES <<------
 
-// QUESTIONS VARIABLE
-const questions = [
-    {
-        question: "What is 2 + 2?",
-        answers: [
-            {answerText: "3", correct: false},
-            {answerText: "4", correct: true},
-            {answerText: "2", correct: false},
-            {answerText: "0", correct: false},
-        ]
-    },
-    {
-        question: "What is 4 + 4?",
-        answers: [
-            {answerText: "4", correct: false},
-            {answerText: "12", correct: false},
-            {answerText: "1", correct: false},
-            {answerText: "8", correct: true},
-        ]
-    },
-    {
-        question: "The more you take, the more you leave behind. What am I?",
-        answers: [
-            {answerText: "0", correct: ["time", "Time"]}
-        ]
-    },
-    {
-        question: "What is 9 + 10?",
-        answers: [
-            {answerText: "21", correct: false},
-            {answerText: "19", correct: true},
-            {answerText: "You Stupid", correct: false},
-            {answerText: "5", correct: false},
-        ]
-    },
-    {
-        question: "What can you hold in your right hand but never in your left?",
-        answers: [
-            {answerText: "0", correct: ["left hand", "Left Hand", "Your left hand", "your left hand"]}
-        ]
-    },
-    {
-        question: "What is 5 + 1?",
-        answers: [
-            {answerText: "7", correct: false},
-            {answerText: "10", correct: false},
-            {answerText: "6", correct: true},
-            {answerText: "5", correct: false},
-        ]
-    },
-];
-
 // SETTING HTML ID TAGS AS VARIABLES
 const questionElement = document.getElementById("question");
 const answerElement = document.getElementById("answer");
@@ -61,6 +9,8 @@ const questionBox = document.getElementById("question-box");
 const riddleBox = document.getElementById("riddle-box");
 const guessBox = document.getElementById("guess-box");
 const textBox = document.getElementById("text-box");
+const form = document.getElementById("form");
+const prog = document.getElementById("prog-bar");
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -90,7 +40,8 @@ function clearHidden() {
 
 // THIS FUNCTION CREATES A NEW QUESTION
 function showQuestion() {
-    console.log(score);
+
+    updateProgBar();
     // Clears the timeout for every character, then resets the array
     // Needed incase next question starts before typing entire question
     for (let i = 0; i < timeout.length; i++) {
@@ -154,6 +105,7 @@ function answerCheck(a,b) {
 
     nextButton.classList.remove("hidden");
     nextButton.addEventListener("click", showQuestion);
+
 
     // If question is correct
     if (a.correct) {
@@ -248,7 +200,79 @@ function checkInput() {
     
   }
 
+// THIS FUNCTION ALLOWS THE ENTER KEY TO PRESS THE NEXT BUTTON
+function enterPressed() {
+
+    document.addEventListener("keypress", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+        }
+      });
+    document.addEventListener("keyup", function(event) {
+        if (event.keyCode == 13) {
+          nextButton.click();
+        }
+      });
+}
+
+function updateProgBar() {
+    let progress = currentQuestionIndex / questions.length * 100;
+    prog.style.width = progress + '%';
+    console.log(progress);
+}
 
 startQuiz();
+enterPressed();
 
 
+// QUESTIONS VARIABLE
+const questions = [
+    {
+        question: "Name the song title: No ____ No Cry",
+        answers: [
+            {answerText: "Boy", correct: false},
+            {answerText: "Woman", correct: true},
+            {answerText: "Please", correct: false},
+            {answerText: "Cry", correct: false},
+        ]
+    },
+    {
+        question: "What is the name of the drum break that has been widely sampled in popular music?",
+        answers: [
+            {answerText: "Funky Break", correct: false},
+            {answerText: "Thunder Break", correct: false},
+            {answerText: "Soulful Break", correct: false},
+            {answerText: "Amen Break", correct: true},
+        ]
+    },
+    {
+        question: "The more you take, the more you leave behind. What am I?",
+        answers: [
+            {answerText: "0", correct: ["time", "Time"]}
+        ]
+    },
+    {
+        question: "What are the odds of getting a royal flush in poker?",
+        answers: [
+            {answerText: "4,165 : 1", correct: false},
+            {answerText: "649,739 : 1", correct: true},
+            {answerText: "72,192 : 1", correct: false},
+            {answerText: "6,489,982 : 1", correct: false},
+        ]
+    },
+    {
+        question: "What is has google names their ai",
+        answers: [
+            {answerText: "0", correct: ["left hand", "Left Hand", "Your left hand", "your left hand"]}
+        ]
+    },
+    {
+        question: "What element is number 1 on the periodic table?",
+        answers: [
+            {answerText: "Helium", correct: false},
+            {answerText: "Sodium", correct: false},
+            {answerText: "Hydrogen", correct: true},
+            {answerText: "Oxygen", correct: false},
+        ]
+    },
+];
