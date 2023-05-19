@@ -261,7 +261,7 @@ const questions = [
         ]
     },
     {
-        question: "What is has google names their ai",
+        question: "What can you hold in your right hand but never your left?",
         answers: [
             {answerText: "0", correct: ["left hand", "Left Hand", "Your left hand", "your left hand"]}
         ]
