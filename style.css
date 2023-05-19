@@ -32,6 +32,9 @@ body {
 .hidden {
     display: none !important;
 }
+/* 
+        Top tab
+*/
 .top-tab-container {
     position: relative;
     display: flex;

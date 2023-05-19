@@ -41,6 +41,15 @@ const questions = [
             {answerText: "0", correct: ["left hand", "Left Hand", "Your left hand", "your left hand"]}
         ]
     },
+    {
+        question: "What is 5 + 1?",
+        answers: [
+            {answerText: "7", correct: false},
+            {answerText: "10", correct: false},
+            {answerText: "6", correct: true},
+            {answerText: "5", correct: false},
+        ]
+    },
 ];
 
 // SETTING HTML ID TAGS AS VARIABLES
@@ -231,9 +240,8 @@ function checkInput() {
         } else {
             currentQuestionIndex = 0;
             nextButton.classList.remove("hidden");
-            nextButton.removeEventListener("click", showScore);
-            nextButton.addEventListener("click", showQuestion);
-            score = 0;
+            nextButton.addEventListener("click", showScore);
+            nextButton.removeListener("click", showQuestion);
             showScore();
         }
     });
