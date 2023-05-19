@@ -121,15 +121,15 @@ function answerCheck(a,b) {
     if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
     } else {
-        currentQuestionIndex = 0;
         nextButton.removeEventListener("click", showQuestion);
         nextButton.addEventListener("click", showScore);
+        currentQuestionIndex++;
     }
 }
 
 // THIS FUNCTION SHOWS THE SCORE AT THE END OF THE QUIZ
 function showScore() {
-
+    updateProgBar();
     clearQuestion();
     for (let i = 0; i < timeout.length; i++) {
         clearTimeout(timeout[i]);
@@ -161,6 +161,8 @@ function checkInput() {
     let textBox = document.getElementById('text-box');
     let userInput = textBox.value;
     let currentQuestion = questions[currentQuestionIndex];
+
+    // enterPressed();
 
     riddleBox.setAttribute("style", "pointer-events: none;")
     console.log(userInput);
@@ -218,7 +220,10 @@ function enterPressed() {
 function updateProgBar() {
     let progress = currentQuestionIndex / questions.length * 100;
     prog.style.width = progress + '%';
-    console.log(progress);
+    console.log(currentQuestionIndex);
+    if (currentQuestionIndex >= questions.length) {
+        currentQuestionIndex = 0;
+    }
 }
 
 startQuiz();
